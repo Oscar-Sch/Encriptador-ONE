@@ -1,15 +1,26 @@
+
 *,*::after,*::before{
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: 'Share Tech Mono', monospace;
+}
+:root{
+    /* --rotate:rotate linear 2s infinite; */
+    --anim:none;
+    --anim-color:36, 255, 0;
+    --bgcolor:black;
+    --green:rgb(23, 214, 23);
+    --padlock:0;
+    --padlock-border:3px solid #eee;
+    --padlock-bg:linear-gradient(0deg, rgb(75, 18, 2) 0%, rgb(108, 61, 3) 35%, rgb(195, 62, 5) 100%);
 }
 
 .body{
-    background-color: #444;
-    
+    background-color: var(--bgcolor);
 }
 .main{
-    width: 80%;
+    width: 90%;
     max-width: 1500px;
     margin: 0 auto;
     padding-top: 1em;
@@ -21,6 +32,65 @@
     align-items: center;
     position: relative;
 
+}
+.padlock{
+    position: absolute;
+    width: 1.5%;
+    height: 2.5%;
+    border-radius: 50%;
+    background-color: black;
+    left: 4.5%;
+    top: 44%;
+    z-index: 4;
+    border: 1px solid #fffd;
+    border-bottom: none;
+    transition: all 1s ease;
+    opacity: var(--padlock);
+}
+.padlock::before{
+    content: "";
+    position: absolute;
+    width: 70%;
+    height: 200%;
+    border-radius: 30%;
+    background-color: black;
+    left: 15%;
+    top: 10%;
+    border-bottom: 2px solid #fff8;
+    transition: all 1s ease;
+    opacity: var(--padlock);
+}
+.main::before{
+    content: "";
+    width: 5%;
+    height: 10%;
+    background: rgb(4,75,2);
+    background: var(--padlock-bg);  
+    position: absolute;
+    left: 2.7%;
+    top: 41%;
+    border-radius: 50% 50% 20% 20%;
+    z-index: 3;
+    border-top: 2px solid #fff8;
+    border-bottom: 2px solid #0008;
+    outline: 1px solid white;
+    transition: all 1s ease;
+    opacity: var(--padlock);
+}
+.main::after{
+    content: "";
+    width: 2.5%;
+    height: 7%;
+    border: 3px solid #eee;
+    border-bottom: none;
+    border-left: var(--padlock-border);
+    position: absolute;
+    left: 4%;
+    top: 38%;
+    border-radius: 30% 30% 0 0;
+    z-index: 2;
+    transition: all 1s ease;
+    opacity: var(--padlock);
 }
 
 .transfer{
@@ -43,12 +113,12 @@
     content: "";
     width: 97.5%;
     height: 88%;
-    background-color: #444;
+    background-color: var(--bgcolor);
     z-index: -1;
     position: absolute;
     top: 6%;
     left: 2.5%;
-    border: 3px solid black;
+    border: 3px solid black inset;
     border-right: none;
     border-radius: 10px;
 
@@ -57,10 +127,14 @@
     content: "";
     width: 300%;
     height: 300%;
-    background:conic-gradient(from 339deg at 50% 50%, rgba(36, 255, 0, 0) 0%, rgba(36, 255, 0, 0.49) 2%, rgba(36, 255, 0, 1) 6%, rgba(238, 130, 238, 0) 27%);
+    background-image:conic-gradient(from 339deg at 50% 50%, rgba(36, 255, 0, 0) 0%, rgba(var(--anim-color), 0.49) 2%, rgba(var(--anim-color), 1) 6%, rgba(238, 130, 238, 0) 27%);
     position: absolute;
     z-index: -2;
-    animation: rotate linear 2s infinite;
+    /* animation: rotate linear 2s infinite; */
+    animation: var(--rotate);
+    transition: all 1s;
+    /* box-shadow: 0px 0px 500px red; */
+
 }
 @keyframes rotate {
     0%{
@@ -90,16 +164,76 @@
 .txt-area{
     resize: none;
     width: 100%;
-    height: 20vw;
+    height: 18vw;
     min-width: 150px;
-    /* user-select: none; */
-    /* cursor: default; */
+    border-radius: 1em;
+    padding: .5em;
+    border: 2px solid var(--green);
+    box-shadow: 0px 0px 20px 5px green;
+    position: relative;
+    background-color: #333;
+    color: var(--green);
+    font-size: 1.5vw;
+    
+}
+
+#msg-input{
+    text-indent: 2em;
+}
+#msg-output{
+    user-select: none;
+    cursor: default;
+    
+}
+#msg-output:focus{
+    outline: none;
+    
+}
+#msg-input:focus{
+    outline: 1px solid rgb(146, 255, 146);
+    
+}
+.input-container{
+    position: relative;
+}
+.input-container::before{
+    content: "> :";
+    width: fit-content;
+    font-weight: bolder;
+    position: absolute;
+    font-size: 1.5vw;
+    color: var(--green);
+    left: .6em;
+    top: .62em;
+    z-index: 3;
 }
 .button{
     padding: .2em .5em;
     border-radius: .3em;
-    margin: .5em 0;
+    margin: .7em 0;
     margin-left: 5%;
+    z-index: 20;
+    font-size: 1.5vw;
+    background-color: #0000;
+    border: 2px dashed var(--green);
+    color: var(--green);
+    cursor: pointer;
+}
+.button:hover{
+    border-color: rgb(146, 255, 146);
+    color: rgb(146, 255, 146);
+    box-shadow: 0 0 5px 1px var(--green);
+    text-shadow: -1px 0 var(--green), 0 1px var(--green), 1px 0 var(--green), 0 -1px var(--green);
+}
+.button:focus{
+    outline: 1px double rgb(146, 255, 146);
+    animation:button-clicked .5s;
+}
+@keyframes button-clicked {
+    0%{opacity: 0;}
+    25%{opacity: 1;}
+    50%{opacity: 0;}
+    100%{opacity: 1;}
 
 }
 .button+.button{
