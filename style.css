@@ -12,8 +12,15 @@
     --bgcolor:black;
     --green:rgb(23, 214, 23);
     --padlock:0;
-    --padlock-border:3px solid #eee;
+    --padlock-anim:open;
+    --padlock-border-visible:3px solid #eeef;
+    --padlock-border-hidden:3px solid #eee0;
     --padlock-bg:linear-gradient(0deg, rgb(75, 18, 2) 0%, rgb(108, 61, 3) 35%, rgb(195, 62, 5) 100%);
+    --but-hover-color:rgb(146, 255, 146);
+    --but-hover-border:rgb(146, 255, 146);
+    --but-hover-bshadow: 0 0 5px 1px var(--green);
+    --but-hover-tshadow: -1px 0 var(--green), 0 1px var(--green), 1px 0 var(--green), 0 -1px var(--green);
+    
 }
 
 .body{
@@ -25,7 +32,7 @@
     margin: 0 auto;
     padding-top: 1em;
     padding-bottom: 1%;
-    border: 3px solid red;
+    /* border: 3px solid red; */
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -76,12 +83,13 @@
     outline: 1px solid white;
     transition: all 1s ease;
     opacity: var(--padlock);
+
 }
 .main::after{
     content: "";
     width: 2.5%;
     height: 7%;
-    border: 3px solid #eee;
+    border: 5px solid #eee;
     border-bottom: none;
     border-left: var(--padlock-border);
     position: absolute;
@@ -89,10 +97,39 @@
     top: 38%;
     border-radius: 30% 30% 0 0;
     z-index: 2;
-    transition: all 1s ease;
+    transition: opacity 1s ease;
     opacity: var(--padlock);
+    animation:var(--padlock-anim) 2s forwards;
 }
-
+@keyframes open {
+    0%{
+        border-left: var(--padlock-border-visible);
+        top: 38%;
+    }
+    20%{
+        border-left: var(--padlock-border-visible);
+        
+    }
+    100%{
+        border-left: var(--padlock-border-hidden);
+        top: 37%;
+        transform: rotate(10deg);
+    }
+}
+@keyframes close {
+    
+    0%{
+        border-left: var(--padlock-border-hidden);
+        top: 37%;
+        transform: rotate(10deg);
+    }
+    
+    100%{
+        border-left: var(--padlock-border-visible);
+        top: 38%;
+        /* transform: rotate(-5deg); */
+    }
+}
 .transfer{
     width: 80%;
     /* height: 60%; */
@@ -220,10 +257,11 @@
     cursor: pointer;
 }
 .button:hover{
-    border-color: rgb(146, 255, 146);
-    color: rgb(146, 255, 146);
-    box-shadow: 0 0 5px 1px var(--green);
-    text-shadow: -1px 0 var(--green), 0 1px var(--green), 1px 0 var(--green), 0 -1px var(--green);
+    border-color: var(--but-hover-border);
+    color: var(--but-hover-color);
+    box-shadow: var(--but-hover-bshadow);
+    text-shadow: var(--but-hover-tshadow);
+    transition: all .2s;
 }
 .button:focus{
     outline: 1px double rgb(146, 255, 146);
