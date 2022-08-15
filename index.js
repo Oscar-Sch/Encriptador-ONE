@@ -1,7 +1,7 @@
 const textarea=document.getElementById("msg-input");
 const textoutput=document.getElementById("msg-output");
-const button=document.getElementById("but");
-const button2=document.getElementById("but2");
+const buttonEncrypt=document.getElementById("but");
+const buttonDecrypt=document.getElementById("but2");
 const buttons=document.getElementsByClassName("button");
 const buttonCopy=document.getElementById("butcopy");
 const root=document.querySelector(":root");
@@ -19,11 +19,11 @@ function padlockAnimOn(){
     root.style.setProperty("--padlock","1");
 }
 function buttonsDisable(){
-    button.disabled=true;
-    button2.disabled=true;
+    buttonEncrypt.disabled=true;
+    buttonDecrypt.disabled=true;
     buttonCopy.disabled=true;
-    button.style.setProperty("cursor","default");
-    button2.style.setProperty("cursor","default");
+    buttonEncrypt.style.setProperty("cursor","default");
+    buttonDecrypt.style.setProperty("cursor","default");
     buttonCopy.style.setProperty("cursor","default");
     setTimeout(() => {
         root.style.setProperty("--but-hover-color","var(--green)");
@@ -34,11 +34,11 @@ function buttonsDisable(){
     }, 500);
 }
 function buttonsEnable(){
-    button.disabled=false;
-    button2.disabled=false;
+    buttonEncrypt.disabled=false;
+    buttonDecrypt.disabled=false;
     buttonCopy.disabled=false;
-    button.style.setProperty("cursor","pointer");
-    button2.style.setProperty("cursor","pointer");
+    buttonEncrypt.style.setProperty("cursor","pointer");
+    buttonDecrypt.style.setProperty("cursor","pointer");
     buttonCopy.style.setProperty("cursor","pointer");
     setTimeout(() => {
         root.style.setProperty("--but-hover-color","rgb(146, 255, 146)");
@@ -51,7 +51,7 @@ function buttonsEnable(){
 
 function inputAnimation(msg) {
     let input=textarea.value;
-    transferAnimOn();
+    if (input!==""){transferAnimOn();
     buttonsDisable();
     if(msg!=="")padlockAnimOn();
     let inputInterval=setInterval(() => {
@@ -61,7 +61,7 @@ function inputAnimation(msg) {
             return};
         input=input.slice(1,input.length -1);
         textarea.value=input;
-    }, 60);
+    }, 60);}
     
 }
 
@@ -75,7 +75,8 @@ function outputAnimation(msg) {
             setTimeout(() => {
                 root.style.setProperty("--padlock-anim","none");
             }, 1000);
-            buttonCopy.scrollIntoView({behavior:"smooth"});
+            buttonsEnable();
+            if(msg!=="")buttonCopy.scrollIntoView({behavior:"smooth"});
             clearInterval(outputInterval);
             return
         };
@@ -134,8 +135,17 @@ function decrypt() {
     inputAnimation(output);
 }
 
+function buttonClicked(but){
+    but.style.setProperty("animation","button-clicked .5s");
+    setTimeout(() => {
+        but.style.setProperty("animation","none");
 
-button.addEventListener("click", ()=>{
+    }, 500);
+}
+
+
+buttonEncrypt.addEventListener("click", ()=>{
+    buttonClicked(buttonEncrypt);
     root.style.setProperty("--anim-color","255, 36, 0");
     root.style.setProperty("--padlock-anim","close");
     root.style.setProperty("--padlock-bg","linear-gradient(0deg, rgb(75, 18, 2) 0%, rgb(108, 61, 3) 35%, rgb(195, 62, 5) 100%)");
@@ -143,7 +153,9 @@ button.addEventListener("click", ()=>{
     // textoutput.value=encrypt();
     // textoutput.value=inputAnimation();
 });
-button2.addEventListener("click", ()=>{
+buttonDecrypt.addEventListener("click", ()=>{
+    buttonClicked(buttonDecrypt);
+
     root.style.setProperty("--anim-color","36, 255, 0");
     root.style.setProperty("--padlock-anim","open");
     root.style.setProperty("--padlock-bg","linear-gradient(0deg, rgba(4,75,2,1) 0%, rgba(3,108,17,1) 35%, rgba(89,195,5,1) 100%)");
@@ -151,10 +163,16 @@ button2.addEventListener("click", ()=>{
     // textoutput.value=decrypt();
 });
 buttonCopy.addEventListener("click", ()=>{
-    
+    buttonClicked(buttonCopy);
     // navigator.clipboard.writeText(textoutput.value);
-    textoutput.select();
-    document.execCommand("copy");
-    textoutput.blur();
-    alert("se copio: "+ textoutput.value);
+    if(textoutput.value!==""){
+        root.style.setProperty("--copy-anim","display-copy 1.5s");
+        setTimeout(() => {
+            root.style.setProperty("--copy-anim","none");
+        }, 1500);
+        textoutput.select();
+        document.execCommand("copy");
+        textoutput.blur();
+
+    };
 });

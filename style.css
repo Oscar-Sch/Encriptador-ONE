@@ -20,6 +20,8 @@
     --but-hover-border:rgb(146, 255, 146);
     --but-hover-bshadow: 0 0 5px 1px var(--green);
     --but-hover-tshadow: -1px 0 var(--green), 0 1px var(--green), 1px 0 var(--green), 0 -1px var(--green);
+    --copy-anim:none;
+    /* --but-clicked:button-clicked .5s; */
     
 }
 
@@ -256,6 +258,7 @@
     border: 2px dashed var(--green);
     color: var(--green);
     cursor: pointer;
+    animation:none;
 }
 .button:hover{
     border-color: var(--but-hover-border);
@@ -266,7 +269,7 @@
 }
 .button:focus{
     outline: 1px double rgb(146, 255, 146);
-    animation:button-clicked .5s;
+    
 }
 @keyframes button-clicked {
     0%{opacity: 0;}
@@ -281,7 +284,65 @@
 }
 #butcopy{
     margin: .5em 0;
+    position: relative;
 }
+#butcopy::before{
+    content: "¡Copiado!";
+    width: fit-content;
+    padding: .1em .3em;
+    position: absolute;
+    top: -3em;
+    left: -.83em;
+    color: rgb(254, 222, 163);
+    border: 2px dashed rgb(255, 188, 63);
+    box-shadow: 0 0 5px 1px orange;
+    background-color: black;
+    text-shadow:-1px 0 2px orange, 0 1px 2px orange, 1px 0 2px orange, 0 -1px 2px orange;
+    font-weight: bolder;
+    visibility: hidden;
+    animation: var(--copy-anim);
+}
+#butcopy::after{
+    content: "";
+    width: 1em;
+    height: 1em;
+    border: 2px dashed rgb(255, 188, 63);
+    border-top: none;
+    border-right: none;
+    position: absolute;
+    transform: rotate(-45deg);
+    background: rgb(0,0,0);
+    background: linear-gradient(45deg, rgba(0,0,0,1) 44%, rgba(0,0,0,0) 55%); 
+    box-shadow: -2px 2px 1px 0px orange;
+    top: -2.02em;
+    left: 1.6em;
+    visibility: hidden;
+    animation: var(--copy-anim);
+}
+@keyframes display-copy {
+    0%{
+        visibility: visible;
+        opacity: 0;
+    }
+    10%{
+        opacity: 1;
+    }
+    20%{
+        opacity: 0;
+    }
+    30%{
+        opacity: 1;
+    }
+    99%{
+        opacity: 0;
+    }
+    100%{
+        opacity: 0;
+        visibility: hidden;
+    }
+
+}
+
 
 @media (max-width:500px) {
     .buttons-container{
