@@ -170,6 +170,7 @@ buttonCopy.addEventListener("click", ()=>{
         setTimeout(() => {
             root.style.setProperty("--copy-anim","none");
         }, 1500);
+        textoutput.focus(); //para que chrome accione correctamente el blur
         textoutput.select();
         document.execCommand("copy");
         textoutput.blur();
