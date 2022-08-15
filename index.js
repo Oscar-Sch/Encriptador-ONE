@@ -18,6 +18,8 @@ function padlockAnimOff(){
 function padlockAnimOn(){
     root.style.setProperty("--padlock","1");
 }
+
+
 function buttonsDisable(){
     buttonEncrypt.disabled=true;
     buttonDecrypt.disabled=true;
@@ -117,8 +119,6 @@ function encrypt(){
 
     inputAnimation(output);
     
-
-    // return output;
 }
 
 function decrypt() {
@@ -150,8 +150,6 @@ buttonEncrypt.addEventListener("click", ()=>{
     root.style.setProperty("--padlock-anim","close");
     root.style.setProperty("--padlock-bg","linear-gradient(0deg, rgb(75, 18, 2) 0%, rgb(108, 61, 3) 35%, rgb(195, 62, 5) 100%)");
     encrypt();
-    // textoutput.value=encrypt();
-    // textoutput.value=inputAnimation();
 });
 buttonDecrypt.addEventListener("click", ()=>{
     buttonClicked(buttonDecrypt);
@@ -160,11 +158,9 @@ buttonDecrypt.addEventListener("click", ()=>{
     root.style.setProperty("--padlock-anim","open");
     root.style.setProperty("--padlock-bg","linear-gradient(0deg, rgba(4,75,2,1) 0%, rgba(3,108,17,1) 35%, rgba(89,195,5,1) 100%)");
     decrypt();
-    // textoutput.value=decrypt();
 });
 buttonCopy.addEventListener("click", ()=>{
     buttonClicked(buttonCopy);
-    // navigator.clipboard.writeText(textoutput.value);
     if(textoutput.value!==""){
         root.style.setProperty("--copy-anim","display-copy 1.5s");
         setTimeout(() => {

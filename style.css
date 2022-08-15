@@ -229,6 +229,11 @@
     outline: none;
     
 }
+#msg-output::selection{
+    background: none;
+    color: var(--green);
+    
+}
 #msg-input:focus{
     outline: 1px solid rgb(146, 255, 146);
     
