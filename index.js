@@ -75,7 +75,7 @@ function outputAnimation(msg) {
             setTimeout(() => {
                 root.style.setProperty("--padlock-anim","none");
             }, 1000);
-            buttonsEnable();
+            buttonCopy.scrollIntoView({behavior:"smooth"});
             clearInterval(outputInterval);
             return
         };
@@ -152,6 +152,9 @@ button2.addEventListener("click", ()=>{
 });
 buttonCopy.addEventListener("click", ()=>{
     
-    navigator.clipboard.writeText(textoutput.value);
+    // navigator.clipboard.writeText(textoutput.value);
+    textoutput.select();
+    document.execCommand("copy");
+    textoutput.blur();
     alert("se copio: "+ textoutput.value);
 });
