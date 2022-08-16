@@ -52,7 +52,7 @@ function buttonsEnable(){
 }
 
 function inputAnimation(msg) {
-    let input=textarea.value;
+    let input=textarea.value.trim();
     if (input!==""){transferAnimOn();
     buttonsDisable();
     if(msg!=="")padlockAnimOn();
@@ -63,7 +63,10 @@ function inputAnimation(msg) {
             return};
         input=input.slice(1,input.length -1);
         textarea.value=input;
-    }, 60);}
+    }, 60);} 
+    else{
+        textarea.value="";
+    }
     
 }
 
@@ -91,7 +94,7 @@ function outputAnimation(msg) {
 
 function encrypt(){
     textoutput.value="";
-    const input=textarea.value;
+    const input=textarea.value.toLowerCase().trim();
     let output="";
     for (char of input){
         switch (char) {
